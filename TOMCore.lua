@@ -40,7 +40,7 @@ local SLOTID_TO_NAME = {
 	[15] = "BACKSLOT",
 	[16] = "MAINHANDSLOT",
 	[17] = "SECONDARYHANDSLOT",
-	[18] = "RANGEDSLOT",
+--	[18] = "RANGEDSLOT",
 	[19] = "TABARDSLOT"
 }
 
@@ -308,8 +308,8 @@ function TOM.Core.IsOutfitApplied(outfit)
 		if slotName ~= "TABARDSLOT" and slotName ~= "SHIRTSLOT" then
 			local baseSourceID, _, appliedSourceID, _, pendingSourceID, _, hasUndo, _, _ = C_Transmog.GetSlotVisualInfo({slotID = slotId, type = 0, modification = 0})
 			local equippedIdForSlot = getVisibleSlotId({applied=appliedSourceID, pending=0, base=baseSourceID, hasUndo=hasUndo})
-			local outfitIdForSlot = getVisibleSlotId(outfit.data[slotName])
-			if outfit.data[slotName].hasUndo then return false end
+			local outfitIdForSlot = getVisibleSlotId(outfit.data[slotName] and slotName ~= "RANGEDSLOT" and outfit.data[slotName])
+			if outfit.data[slotName] and slotName ~= "RANGEDSLOT" and outfit.data[slotName].hasUndo then return false end
 			if equippedIdForSlot ~= outfitIdForSlot then return false end
 		end
 	end
@@ -322,7 +322,7 @@ function TOM.Core.IsOutfitSelected(outfit)
 		if slotName ~= "TABARDSLOT" and slotName ~= "SHIRTSLOT" then
 			local baseSourceID, _, appliedSourceID, _, pendingSourceID, _, hasUndo, _, _ = C_Transmog.GetSlotVisualInfo({slotID = slotId, type = 0, modification = 0})
 			local equippedIdForSlot = TOM.Core.GetTransmogId({applied=appliedSourceID, pending=pendingSourceID, base=baseSourceID, hasUndo=hasUndo})
-			local outfitIdForSlot = TOM.Core.GetTransmogId(outfit.data[slotName])
+			local outfitIdForSlot = TOM.Core.GetTransmogId(outfit.data[slotName] and slotName ~= "RANGEDSLOT" and outfit.data[slotName])
 			if equippedIdForSlot ~= outfitIdForSlot then return false end
 		end
 	end
