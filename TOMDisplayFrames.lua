@@ -77,21 +77,22 @@ local function addFavoriteIcon(modelFrame)
 end
 
 local function tryCreateTransmogInfo(outfit)
-	ret = {}
-	for invSlotName, invSlotData in pairs(outfit.data) do
-		local loc = TransmogUtil.CreateTransmogLocation(invSlotName, Enum.TransmogType.Appearance, Enum.TransmogModification.Main)
-		local _, _, _, canTransmog = C_Transmog.GetSlotInfo(loc)
-		local id = TOM.Core.GetTransmogId(invSlotData)
-		if canTransmog and id then
-			local pInfo = TransmogUtil.CreateTransmogPendingInfo(Enum.TransmogPendingType.Apply, id)
-			if pInfo.Init and pInfo.transmogID > 0 and pInfo.type then
-				tinsert(ret, {location = loc, pendingInfo = pInfo})
-			else
-				return nil
+    local ret = {}
+    for invSlotName, invSlotData in pairs(outfit.data) do
+        -- Skip RANGEDSLOT (no longer valid in MoP Classic)
+        if invSlotName ~= "RANGEDSLOT" then
+            local loc = TransmogUtil.CreateTransmogLocation(invSlotName, Enum.TransmogType.Appearance, Enum.TransmogModification.Main)
+            local _, _, _, canTransmog = C_Transmog.GetSlotInfo(loc)
+            local id = TOM.Core.GetTransmogId(invSlotData)
+			if canTransmog and id then
+			    local pInfo = TransmogUtil.CreateTransmogPendingInfo(Enum.TransmogPendingType.Apply, id)
+			    if pInfo.Init and pInfo.transmogID > 0 and pInfo.type then
+			        tinsert(ret, {location = loc, pendingInfo = pInfo})
+			    end
 			end
-		end
-	end
-	return ret
+        end
+    end
+    return ret
 end
 
 --needs rework
