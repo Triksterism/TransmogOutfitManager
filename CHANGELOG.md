@@ -1,3 +1,6 @@
+### 1.2.3
+Updated for Mists of Pandaria Classic by Shekza (US-Grobbulus)....because I used ChatGPT and trial+error lmao
+
 ### 1.2.2
 
 Update for patch 4.4.1 compatibility
