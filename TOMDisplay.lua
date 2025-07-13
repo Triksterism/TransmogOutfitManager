@@ -129,10 +129,12 @@ function TOM.Display.Redraw(self)
 				modelFrame.OutfitName:Show()
 				modelFrame:Undress()
 				for invSlotName, invSlotData in pairs(outfit.data) do
-					local transmogId = TOM.Core.GetTransmogId(invSlotData)
-					if transmogId > 0 then
-						modelFrame:TryOn(transmogId)
-					end
+				    if invSlotName ~= "RANGEDSLOT" then
+				        local transmogId = TOM.Core.GetTransmogId(invSlotData)
+				        if transmogId > 0 then
+				            modelFrame:TryOn(transmogId)
+				        end
+				    end
 				end
 				modelFrame.FavIcon:SetShown(TOM.Core.IsFavorited(modelFrame))
 			else
